@@ -1,0 +1,32 @@
+# Ignore dependencies
+node_modules/
+bower_components/
+
+# Ignore build output
+dist/
+build/
+coverage/
+temp/
+tmp/
+logs/
+*.log
+
+# Ignore environment variables/secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Ignore editor configs
+.vscode/
+.idea/
+
+# Ignore test snapshots
+*.snap
+
+# Ignore minified/bundled files
+*.min.js
+*.map
+
+# Misc
+*.tgz
