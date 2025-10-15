@@ -13,9 +13,6 @@ async function startServer() {
 
         await sequelize.sync({ alter: true });
 
-        const usersExists = await sequelize.getQueryInterface().showAllTables();
-        console.log('Tables in database:', usersExists);
-
         app.listen(PORT, () => {
             console.log(`Server is running on port: ${PORT}`);
         });
