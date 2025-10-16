@@ -1,6 +1,7 @@
-<div align="center">
-# EVENT-MANAGEMENT-API-TASK
 
+<div align="center">
+   
+# EVENT-MANAGEMENT-API-TASK
 **_Built with the tools and technologies:_**
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
@@ -17,8 +18,6 @@
 ## Overview
 
 Event Management API Task is a backend project developed as part of an internship assignment. It provides a RESTful API for managing events, including creation, update, deletion, and retrieval. The project is built with JavaScript and it's run environment and is designed to be simple, scalable, and easy to integrate with frontend or mobile clients.
-
----
 
 ## Setup Instructions
 
@@ -42,8 +41,6 @@ Event Management API Task is a backend project developed as part of an internshi
    # Or for development mode
    npm run dev
    ```
-
----
 
 ## API Endpoints
 
@@ -206,13 +203,9 @@ Event Management API Task is a backend project developed as part of an internshi
   }
   ```
 
----
-
 ## Contributing
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
----
 
 ## License
 
