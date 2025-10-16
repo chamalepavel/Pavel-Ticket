@@ -12,12 +12,14 @@ app.use(express.static("public"));
 // route import
 import eventRouter from "./routes/event.routes.js";
 import userRouter from "./routes/user.routes.js";
+import registrationRouter from "./routes/registration.routes.js";
 
 import { errorHandler } from "./utils/errorHandler.js";
 
 // route declaration
 app.use("/api/v1/events", eventRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/registrations", registrationRouter);
 
 app.use(errorHandler);
 

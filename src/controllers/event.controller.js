@@ -67,77 +67,41 @@ const getEventDetails = asyncHandler(async (req, res) => {
         throw new ApiError(400, 'Invalid eventid parameter');
     }
 
-    const event = await Event.findByPk(eventIdNum);
+    const event = await Event.findByPk(eventIdNum, {
+        include: [{
+            model: User,
+            through: {
+                model: Registration,
+                attributes: [],
+            },
+            attributes: ['userid', 'name', 'email'],
+        }]
+    });
 
     if (!event) {
         throw new ApiError(404, 'Event not found');
     }
+
+    const registeredUsers = event.Users || [];
+    const responseData = {
+        eventid: event.eventid,
+        title: event.title,
+        event_date: event.event_date,
+        location: event.location,
+        capacity: event.capacity,
+        created_at: event.created_at,
+        registered_users_count: registeredUsers.length,
+        registered_users: registeredUsers,
+    };
 
     return res.status(200).json(
-        new ApiResponse(200, event, 'Event details retrieved successfully')
+        new ApiResponse(200, responseData, 'Event details with registered users retrieved successfully')
     );
 });
 
-// Controller to register a user for an event
-const registerUserForEvent = asyncHandler(async (req, res) => {
-    const { userid } = req.body;
-    const { eventid } = req.params;
 
-    if (!userid) {
-        throw new ApiError(400, 'Missing userid in request body');
-    }
-
-    if (!Number.isInteger(userid) || userid < 1) {
-        throw new ApiError(400, 'Invalid userid');
-    }
-
-    const eventIdNum = Number(eventid);
-    if (!Number.isInteger(eventIdNum) || eventIdNum < 1) {
-        throw new ApiError(400, 'Invalid eventid parameter');
-    }
-
-    // Check user exists
-    const user = await User.findByPk(userid);
-    if (!user) {
-        throw new ApiError(404, 'User not found');
-    }
-
-    // Check event exists and is upcoming
-    const event = await Event.findByPk(eventIdNum);
-    if (!event) {
-        throw new ApiError(404, 'Event not found');
-    }
-
-    if (new Date(event.event_date) <= new Date()) {
-        throw new ApiError(400, 'Event date has already passed');
-    }
-
-    // Check if user already registered
-    const existingRegistration = await Registration.findOne({
-        where: { userid, eventid: eventIdNum }
-    });
-    if (existingRegistration) {
-        throw new ApiError(400, 'User already registered for this event');
-    }
-
-    // Check capacity
-    const registrationCount = await Registration.count({ where: { eventid: eventIdNum } });
-    if (registrationCount >= event.capacity) {
-        throw new ApiError(400, 'Event capacity is full');
-    }
-
-    const registration = await Registration.create({
-        userid,
-        eventid: eventIdNum,
-    });
-
-    return res.status(201).json(
-        new ApiResponse(201, registration, 'User registered for event successfully')
-    );
-});
 
 export {
     createEvent,
     getEventDetails,
-    registerUserForEvent,
 };
