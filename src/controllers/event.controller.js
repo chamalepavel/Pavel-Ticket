@@ -1,8 +1,8 @@
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { Event, Registration } from '../models/index.model.js';
-import { Op } from "sequelize";
+import { Event, User, Registration } from '../models/index.model.js';
+import { Op, Sequelize } from "sequelize";
 
 // Controller to create a new event
 const createEvent = asyncHandler(async (req, res) => {
@@ -112,7 +112,7 @@ const getUpcomingEvents = asyncHandler(async (req, res) => {
         },
         order: [
             ['event_date', 'ASC'],
-            [sequelize.literal('LOWER(location)'), 'ASC'],
+            [Sequelize.literal('LOWER(location)'), 'ASC'],
         ],
     });
 
