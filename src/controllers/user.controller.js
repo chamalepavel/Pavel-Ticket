@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from '../models/index.model.js';
 
+// Controller to register a new user
 const userRegister = asyncHandler(async (req, res) => {
     const { name, email } = req.body;
 

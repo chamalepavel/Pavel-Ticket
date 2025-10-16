@@ -60,6 +60,7 @@ const registerUserForEvent = asyncHandler(async (req, res) => {
     );
 });
 
+// Controller to cancel a user's registration for an event
 const cancelRegistration = asyncHandler(async (req, res) => {
     const { userid } = req.body;
     const { eventid } = req.params;
