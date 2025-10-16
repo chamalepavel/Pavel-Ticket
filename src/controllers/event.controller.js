@@ -1,7 +1,8 @@
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { Event, User, Registration } from '../models/index.model.js';
+import { Event, Registration } from '../models/index.model.js';
+import { Op } from "sequelize";
 
 // Controller to create a new event
 const createEvent = asyncHandler(async (req, res) => {
@@ -99,9 +100,74 @@ const getEventDetails = asyncHandler(async (req, res) => {
     );
 });
 
+// Controller to get all upcoming events
+const getUpcomingEvents = asyncHandler(async (req, res) => {
+    const currentDate = new Date();
 
+    const events = await Event.findAll({
+        where: {
+            event_date: {
+                [Op.gt]: currentDate,
+            },
+        },
+        order: [
+            ['event_date', 'ASC'],
+            [sequelize.literal('LOWER(location)'), 'ASC'],
+        ],
+    });
+
+    if (!events || events.length === 0) {
+        throw new ApiError(404, 'No upcoming events found');
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, events, 'Upcoming events retrieved successfully')
+    );
+});
+
+// Controller to get event statistics
+const eventStats = asyncHandler(async (req, res) => {
+    const { eventid } = req.params;
+
+    if (!eventid) {
+        throw new ApiError(400, 'Missing eventid parameter');
+    }
+
+    const eventIdNum = Number(eventid);
+    if (!Number.isInteger(eventIdNum) || eventIdNum < 1) {
+        throw new ApiError(400, 'Invalid eventid parameter');
+    }
+
+    const event = await Event.findByPk(eventIdNum);
+
+    if (!event) {
+        throw new ApiError(404, 'Event not found');
+    }
+
+    // Count total registrations for event
+    const totalRegistrations = await Registration.count({ where: { eventid: eventIdNum } });
+
+    // Calculate remaining capacity and percentage used
+    const remainingCapacity = Math.max(event.capacity - totalRegistrations, 0);
+    const percentageUsed = event.capacity > 0 ? (totalRegistrations / event.capacity) * 100 : 0;
+
+    const data = {
+        eventid: event.eventid,
+        title: event.title,
+        capacity: event.capacity,
+        totalRegistrations,
+        remainingCapacity,
+        percentageUsed: Number(percentageUsed.toFixed(2)), 
+    };
+
+    return res.status(200).json(
+        new ApiResponse(200, data, 'Event statistics retrieved successfully')
+    );
+});
 
 export {
     createEvent,
     getEventDetails,
+    getUpcomingEvents,
+    eventStats,
 };
