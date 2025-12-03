@@ -1,44 +1,66 @@
-import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { User } from '../models/index.model.js';
+import { ApiError } from '../utils/ApiError.js';
+import { ApiResponse } from '../utils/ApiResponse.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
+import { User, Role, Ticket, Event, Category } from '../models/index.model.js';
+import { getPaginationParams, getPaginationMeta } from '../utils/pagination.js';
 
-// Controller to register a new user
-const userRegister = asyncHandler(async (req, res) => {
-    const { name, email } = req.body;
+/**
+ * Get user by ID (Public - basic info only)
+ */
+export const getUserById = asyncHandler(async (req, res) => {
+    const { userid } = req.params;
 
-    if (!name || !email) {
-        throw new ApiError(400, 'Missing required fields: name and email');
-    }
-
-    if (typeof name !== 'string' || name.trim().length === 0) {
-        throw new ApiError(400, 'Invalid name');
-    }
-
-    if (typeof email !== 'string' || email.trim().length === 0) {
-        throw new ApiError(400, 'Invalid email');
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        throw new ApiError(400, 'Invalid email format');
-    }
-
-    const existingUser = await User.findOne({ where: { email: email.trim().toLowerCase() } });
-    if (existingUser) {
-        throw new ApiError(409, 'Email is already registered');
-    }
-
-    const newUser = await User.create({
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
+    const user = await User.findByPk(userid, {
+        include: [{
+            model: Role,
+            as: 'role',
+            attributes: ['role_id', 'name']
+        }],
+        attributes: ['userid', 'name', 'email', 'created_at']
     });
 
-    return res.status(201).json(
-        new ApiResponse(201, newUser, 'User registered successfully')
+    if (!user) {
+        throw new ApiError(404, 'User not found');
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, user, 'User retrieved successfully')
     );
 });
 
-export {
-    userRegister,
-};
+/**
+ * Get user's events history (tickets purchased)
+ */
+export const getUserEventsHistory = asyncHandler(async (req, res) => {
+    const { page, limit, offset } = getPaginationParams(req.query);
+    const userid = req.user.userid;
+    const { status } = req.query;
+
+    const whereClause = { userid };
+    if (status) whereClause.status = status;
+
+    const { count, rows: tickets } = await Ticket.findAndCountAll({
+        where: whereClause,
+        limit,
+        offset,
+        order: [['purchase_date', 'DESC']],
+        include: [
+            {
+                model: Event,
+                as: 'event',
+                attributes: ['eventid', 'title', 'description', 'event_date', 'location', 'price', 'image_url'],
+                include: [{
+                    model: Category,
+                    as: 'category',
+                    attributes: ['category_id', 'name']
+                }]
+            }
+        ]
+    });
+
+    const pagination = getPaginationMeta(page, limit, count);
+
+    return res.status(200).json(
+        new ApiResponse(200, { tickets, pagination }, 'User events history retrieved successfully')
+    );
+});

@@ -16,11 +16,32 @@ export default (sequelize) => {
             unique: true,
             allowNull: false,
             validate: { isEmail: true }
+        },
+        password: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        role_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1, // Default to 'user' role
+            references: {
+                model: 'roles',
+                key: 'role_id'
+            }
+        },
+        phone: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+        },
+        is_active: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
         }
     }, {
         timestamps: true,
         createdAt: 'created_at',
-        updatedAt: false,
+        updatedAt: 'updated_at',
         tableName: 'users',
     });
 }

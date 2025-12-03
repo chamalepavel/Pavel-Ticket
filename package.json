@@ -1,23 +1,31 @@
 {
-  "name": "event_management_api",
+  "name": "pavel-ticket-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Pavel Ticket - Sistema de Gestión de Eventos",
   "license": "ISC",
-  "author": "Saurabh Vaidya",
+  "author": "Pavel Huberto",
   "type": "module",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "seed": "node src/scripts/seedDatabase.js"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2",
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
     "prettier": "^3.6.2",

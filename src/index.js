@@ -11,7 +11,8 @@ async function startServer() {
         await sequelize.authenticate();
         console.log('Database connection established successfully.');
 
-        await sequelize.sync({ alter: true });
+        // No sync - tables are created by seedDatabase.js
+        // await sequelize.sync({ alter: true });
 
         app.listen(PORT, () => {
             console.log(`Server is running on port: ${PORT}`);

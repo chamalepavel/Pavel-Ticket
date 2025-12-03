@@ -1,214 +1,354 @@
+# PAVEL TICKET - Sistema de Gestión de Eventos
 
-<div align="center">
-   
-# EVENT-MANAGEMENT-API-TASK
-**_Built with the tools and technologies:_**
+Sistema completo de gestión y venta de boletos para eventos desarrollado con Node.js, React y PostgreSQL.
 
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat-square&logo=postgresql&logoColor=white)
-![JSON](https://img.shields.io/badge/JSON-000000?style=flat-square&logo=json&logoColor=white)
-![Nodemon](https://img.shields.io/badge/Nodemon-76D04B?style=flat-square&logo=nodemon&logoColor=white)
-![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=prettier&logoColor=black)
-![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat-square&logo=postman&logoColor=white)
+## Video Explicativo
 
+Puedes ver el video completo explicando la API y sus funcionalidades aquí:
+[Ver Video Explicativo](https://drive.google.com/file/d/1jBvrOSNZXvTK0C4tDXkR01uW3QT4RoEN/view?usp=drive_link)
 
-</div>
+## Descripción
 
+PAVEL TICKET es una plataforma web moderna que permite la gestión integral de eventos, desde la creación y administración hasta la venta de boletos y registro de asistentes. El sistema cuenta con roles de Administrador y Usuario, cada uno con funcionalidades específicas para una experiencia completa.
 
-## Overview
+## Características Principales
 
-Event Management API Task is a backend project developed as part of an internship assignment. It provides a RESTful API for managing events, including creation, update, deletion, and retrieval. The project is built with JavaScript and it's run environment and is designed to be simple, scalable, and easy to integrate with frontend or mobile clients.
+### Para Usuarios
+- Registro e inicio de sesión seguro
+- Exploración de eventos por categorías
+- Compra de boletos múltiples por transacción
+- Visualización de eventos registrados
+- Gestión de perfil personal
+- Cálculo automático de precios y totales
 
-## Setup Instructions
+### Para Administradores
+- Panel de administración completo con estadísticas
+- Gestión de eventos (crear, editar, eliminar, subir imágenes)
+- Gestión de usuarios del sistema
+- Reportes y estadísticas de ventas
+- Control de capacidad y disponibilidad
+- Visualización de revenue por evento
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/saurabh7071/Event-Management-API-Task.git
-   cd Event-Management-API-Task
-   ```
+## Tecnologías Utilizadas
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+### Backend
+- Node.js v18+ con Express.js
+- PostgreSQL 15 como base de datos
+- Sequelize ORM para modelado de datos
+- JWT para autenticación segura
+- Multer para carga de imágenes
+- Docker para contenedores de base de datos
+- bcryptjs para encriptación de contraseñas
 
-3. **Set up environment variables**
-   - Copy `.env.example` to `.env` and update values as needed.
+### Frontend
+- React 18 con Hooks
+- React Router DOM para navegación
+- Axios para peticiones HTTP
+- Recharts para gráficos y estadísticas
+- CSS3 personalizado para estilos
 
-4. **Run the server**
-   ```bash
-   npm start
-   # Or for development mode
-   npm run dev
-   ```
+## Instalación y Configuración
 
-## API Endpoints
+### Prerrequisitos
+- Node.js 18 o superior
+- Docker Desktop instalado y ejecutándose
+- Git
 
-### 1. Create Event
+### Instalación Rápida
 
-- **POST** `/events/createEvent`
-- **Request Body Example:**
-  ```json
-  {
-    "title": "Habitant",
-    "event_date": "2025-10-16T05:43:00Z",
-    "location": "New York",
-    "capacity": 2
-  }
-  ```
-- **Success Response:**
-  ```json
-  {
-    "id": "1",
-    "name": "Habitant",
-    "date": "2025-10-16T05:43:00Z",
-    "location": "New York",
-    "capacity": 2,
-    "createdAt": "2025-10-16T06:44:12Z"
-  }
-  ```
+1. Clonar el repositorio
+```bash
+git clone https://github.com/tu-usuario/pavel-ticket.git
+cd pavel-ticket
+```
 
-### 2. Get Event Detail
+2. Instalar dependencias del backend
+```bash
+npm install
+```
 
-- **GET** `/events/getEventDetails/<eventId>`
-- **Success Response:**
-  ```json
-  {
-    "statusCode": 200,
-    "data": {
-        "eventid": 3,
-        "title": "Fest",
-        "event_date": "2025-10-16T11:12:00.000Z",
-        "location": "Tokeyo",
-        "capacity": 2,
-        "created_at": "2025-10-16T05:40:54.773Z",
-        "registered_users_count": 2,
-        "registered_users": [
-            {
-                "userid": 1,
-                "name": "John Doe",
-                "email": "john.doe@example.com"
-            },
-            {
-                "userid": 2,
-                "name": "Sam",
-                "email": "addfkdja@gmail.com"
-            }
-        ]
-    },
-    "message": "Event details with registered users retrieved successfully",
-    "success": true
-  }
-  ```
+3. Instalar dependencias del frontend
+```bash
+cd frontend
+npm install
+cd ..
+```
 
-### 3. Upcoming Events
+4. Configurar variables de entorno
 
-- **GET** `/events/getUpcomingEvents`
+Copiar el archivo de ejemplo y configurar:
+```bash
+copy .env.example .env
+```
 
-- **Success Response:**
-  ```json
-  {
-    "statusCode": 200,
-    "data": [
-        {
-            "eventid": 2,
-            "title": "technokret",
-            "event_date": "2025-11-01T10:00:00.000Z",
-            "location": "xyz",
-            "capacity": 200,
-            "created_at": "2025-10-15T19:27:26.606Z"
-        },
-        {
-            "eventid": 3,
-            "title": "Habitant",
-            "event_date": "2025-11-01T10:00:00.000Z",
-            "location": "abc",
-            "capacity": 500,
-            "created_at": "2025-10-15T19:32:51.127Z"
-        },
-        {
-            "eventid": 1,
-            "title": "My Event",
-            "event_date": "2025-11-01T10:00:00.000Z",
-            "location": "New York",
-            "capacity": 200,
-            "created_at": "2025-10-15T17:36:53.594Z"
-        }
-    ],
-    "message": "Upcoming events retrieved successfully",
-    "success": true
-  }
-  ```
+Editar `.env` con tus configuraciones:
+```env
+# Database Configuration
+PGHOST=localhost
+PGUSER=event_admin
+PGDATABASE=event_management
+PGPASSWORD=SecureP@ssw0rd2024
+PGPORT=5432
 
-### 4. Event States
+# Server Configuration
+PORT=8000
+NODE_ENV=development
 
-- **GET** `/events/eventStats/<eventId>`
-- **Success Response:**
-  ```json
-  {
-    "statusCode": 200,
-    "data": {
-        "eventid": 4,
-        "title": "Habitant",
-        "capacity": 2,
-        "totalRegistrations": 2,
-        "remainingCapacity": 0,
-        "percentageUsed": 100
-    },
-    "message": "Event statistics retrieved successfully",
-    "success": true
-  }
-  ```
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+JWT_EXPIRE=7d
 
-### 5. User Register for an Event
+# CORS Configuration
+CORS_ORIGIN=http://localhost:3000
 
-- **POST** `/registrations/registerUserForEvent/<eventId>`
-- **Request Body Example:**
-  ```json
-  {  
-    "userid": 3
-  }
-  ```
-- **Success Response:**
-  ```json
-  {
-    "statusCode": 201,
-    "data": {
-        "uniqueid": "5759afe9-2aaf-4a7f-b6f1-d300d8d167a8",
-        "registered_at": "2025-10-16T07:38:21.349Z",
-        "userid": 3,
-        "eventid": <eventId>
-    },
-    "message": "User registered for event successfully",
-    "success": true
-  }
-  ```
+# File Upload Configuration
+MAX_FILE_SIZE=5242880
+UPLOAD_PATH=./public/uploads
+```
 
-### 6. Cancel User Registration
+5. Iniciar el proyecto completo
 
-- **POST** `/registrations/cancelRegistration/<eventId>`
-- **Request Body Example:**
-  ```json
-  {  
-    "userid": 3
-  }
-  ```
-- **Success Response:**
-  ```json
-  {
-    "statusCode": 200,
-    "data": null,
-    "message": "User registration successfully cancelled",
-    "success": true
-  }
-  ```
+Opción 1 - Script automático:
+```bash
+start-all.bat
+```
 
-## Contributing
+Opción 2 - Manual:
+```bash
+# Terminal 1: Iniciar base de datos
+docker-compose up -d
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+# Terminal 2: Iniciar backend
+npm run dev
 
-## License
+# Terminal 3: Iniciar frontend
+cd frontend
+npm start
+```
 
-This project is licensed for educational and internship purposes.
+## Uso del Sistema
+
+### Acceso de Prueba
+
+Usuario Regular:
+- Email: `juan@example.com`
+- Password: `password123`
+
+Administrador:
+- Email: `admin@eventmanager.com`
+- Password: `password123`
+
+### URLs de Acceso
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
+- PgAdmin: http://localhost:5050
+
+### Flujo de Compra de Boletos
+
+1. Iniciar sesión como usuario
+2. Navegar a la sección "Eventos"
+3. Filtrar por categoría si lo deseas
+4. Seleccionar un evento para ver detalles
+5. Usar botones +/- para seleccionar cantidad
+6. Ver el total calculado en tiempo real
+7. Click en "Comprar X Entrada(s)"
+8. Confirmar compra
+9. Revisar en "Mis Registros"
+
+### Panel de Administración
+
+1. Iniciar sesión como administrador
+2. Acceder a `/admin`
+3. Dashboard: Ver estadísticas generales, gráficos de revenue
+4. Gestión de Eventos: Crear, editar, eliminar eventos, subir imágenes
+5. Gestión de Usuarios: Ver y administrar todos los usuarios
+6. Reportes: Estadísticas detalladas de ventas por período
+
+## Estructura del Proyecto
+
+```
+pavel-ticket/
+├── src/                          # Backend
+│   ├── controllers/              # Lógica de negocio
+│   ├── models/                   # Modelos de datos
+│   ├── routes/                   # Rutas de API
+│   ├── middleware/               # Autenticación y validación
+│   ├── utils/                    # Utilidades y helpers
+│   ├── scripts/                  # Scripts de base de datos
+│   ├── app.js                    # Configuración de Express
+│   └── index.js                  # Punto de entrada
+│
+├── frontend/                     # Frontend React
+│   ├── public/                   # Archivos estáticos
+│   └── src/
+│       ├── components/           # Componentes reutilizables
+│       ├── pages/                # Páginas principales
+│       ├── services/             # Servicios de API
+│       ├── context/              # Context para autenticación
+│       └── config/               # Configuración
+│
+├── docker/                       # Configuración Docker
+│   └── init-scripts/             # Scripts de inicialización DB
+│
+├── public/uploads/               # Archivos subidos
+├── .env                          # Variables de entorno
+├── docker-compose.yml            # Configuración contenedores
+└── package.json                  # Dependencias backend
+```
+
+## Scripts Disponibles
+
+### Backend
+```bash
+npm run dev          # Desarrollo con nodemon (auto-reload)
+npm start            # Producción
+npm run seed         # Poblar base de datos con datos de prueba
+```
+
+### Frontend
+```bash
+npm start            # Servidor de desarrollo (puerto 3000)
+npm build            # Build de producción
+npm test             # Ejecutar tests
+```
+
+### Base de Datos (Windows)
+```bash
+db-start.bat         # Iniciar contenedor PostgreSQL
+db-stop.bat          # Detener contenedor
+db-reset.bat         # Reiniciar y limpiar base de datos
+db-logs.bat          # Ver logs del contenedor
+```
+
+## Endpoints Principales de la API
+
+### Autenticación (`/api/v1/auth`)
+- `POST /register` - Registrar nuevo usuario
+- `POST /login` - Iniciar sesión
+- `POST /logout` - Cerrar sesión
+- `GET /me` - Obtener usuario autenticado
+
+### Eventos (`/api/v1/events`)
+- `GET /` - Listar todos los eventos
+- `GET /:id` - Obtener detalles de un evento
+- `POST /` - Crear evento (Admin)
+- `PUT /:id` - Actualizar evento (Admin)
+- `DELETE /:id` - Eliminar evento (Admin)
+
+### Registros (`/api/v1/registrations`)
+- `POST /registerUserForEvent/:id` - Comprar boletos
+- `GET /my-registrations` - Ver mis registros
+- `POST /cancelRegistration/:id` - Cancelar registro
+
+### Categorías (`/api/v1/categories`)
+- `GET /` - Listar todas las categorías
+- `POST /` - Crear categoría (Admin)
+- `PUT /:id` - Actualizar categoría (Admin)
+
+### Administración (`/api/v1/admin`)
+- `GET /dashboard/stats` - Estadísticas del dashboard
+- `GET /reports/sales` - Reporte de ventas por período
+- `GET /users` - Listar todos los usuarios
+- `PATCH /events/:id/sales` - Modificar ventas de evento
+
+## Seguridad Implementada
+
+- Autenticación basada en JSON Web Tokens (JWT)
+- Contraseñas encriptadas con bcrypt (10 rounds)
+- Validación de datos con express-validator
+- Protección de rutas por roles (middleware)
+- Sanitización de inputs
+- Variables de entorno para datos sensibles
+- Helmet.js para headers de seguridad HTTP
+- CORS configurado específicamente
+
+## Docker y Base de Datos
+
+El proyecto utiliza Docker Compose para gestionar PostgreSQL:
+
+Servicios incluidos:
+- PostgreSQL 15 (puerto 5432)
+- PgAdmin 4 (puerto 5050)
+
+Comandos útiles:
+```bash
+# Iniciar todos los servicios
+docker-compose up -d
+
+# Ver logs en tiempo real
+docker-compose logs -f
+
+# Detener servicios
+docker-compose down
+
+# Limpiar volúmenes (CUIDADO: borra datos)
+docker-compose down -v
+```
+
+## Características del Frontend
+
+- Diseño responsive y moderno
+- Navegación intuitiva con React Router
+- Sistema de autenticación con Context API
+- Componentes reutilizables (Header, Footer)
+- Carga dinámica de imágenes de eventos
+- Filtrado de eventos por categoría
+- Carrito de compra con cálculo automático
+- Dashboard administrativo con gráficos
+- Manejo de errores y feedback al usuario
+
+## Modelos de Base de Datos
+
+### Principales Entidades
+- Users: Usuarios del sistema (clientes y admins)
+- Events: Eventos disponibles
+- Categories: Categorías de eventos
+- Registrations: Compras/registros de usuarios
+- Tickets: Boletos individuales generados
+- TicketTypes: Tipos de boletos por evento
+- PromoCodes: Códigos promocionales (opcional)
+
+### Relaciones
+- Un evento pertenece a una categoría
+- Un evento tiene múltiples tipos de boletos
+- Un usuario puede tener múltiples registros
+- Un registro genera múltiples tickets
+
+## Despliegue a Producción
+
+### Variables de Entorno Importantes
+```env
+NODE_ENV=production
+PORT=8000
+PGHOST=tu-servidor-postgres
+JWT_SECRET=clave-super-segura-diferente
+CORS_ORIGIN=https://tu-dominio.com
+```
+
+### Recomendaciones
+1. Usar PostgreSQL en servidor dedicado
+2. Configurar HTTPS con certificado SSL
+3. Usar PM2 para gestión de procesos Node.js
+4. Implementar sistema de backups de BD
+5. Configurar logs centralizados
+6. Monitorear con herramientas como New Relic
+
+## Contribución
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/NuevaCaracteristica`)
+3. Commit tus cambios (`git commit -m 'Agregar nueva característica'`)
+4. Push a la rama (`git push origin feature/NuevaCaracteristica`)
+5. Abre un Pull Request
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver archivo `LICENSE` para más detalles.
+
+## Autor
+
+Pavel Huberto
+
+Desarrollado como proyecto académico para la Universidad de San Carlos de Guatemala.

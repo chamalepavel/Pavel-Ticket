@@ -32,12 +32,16 @@ bower_components/
 .env
 .env.test
 .env.*.local
+.env.docker
 
 # Database
 *.sqlite
 *.sqlite3
 *.db
 *.db-journal
+
+# Docker volumes
+docker/data/
 
 # Build output
 /dist
@@ -57,6 +61,39 @@ Thumbs.db
 
 # Misc
 *.tgz
+nul
 # Secrets
 *.pem
 *.key
+
+# Documentation files (keep only main README)
+GUIA_*.md
+ANALISIS_*.md
+PLAN_*.md
+TUTORIAL_*.md
+INSTRUCCIONES_*.md
+RESUMEN_*.md
+REVISION_*.md
+SISTEMA_*.md
+CAMBIOS_*.md
+MEJORAS_*.md
+RECOMENDACIONES_*.md
+VERIFICACION_*.md
+GUIA_PRESENTACION_*.md
+
+# Office files
+*.docx
+*.doc
+*.xlsx
+*.xls
+*.pptx
+*.ppt
+*.pdf
+~$*
+
+# Uploads directory (except .gitkeep)
+public/uploads/*
+!public/uploads/.gitkeep
+!public/uploads/events/
+public/uploads/events/*
+!public/uploads/events/.gitkeep
