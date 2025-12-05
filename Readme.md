@@ -343,12 +343,9 @@ Las contribuciones son bienvenidas. Por favor:
 4. Push a la rama (`git push origin feature/NuevaCaracteristica`)
 5. Abre un Pull Request
 
-## Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver archivo `LICENSE` para más detalles.
 
 ## Autor
 
 Pavel Huberto
 
-Desarrollado como proyecto académico para la Universidad de San Carlos de Guatemala.
+Desarrollado como proyecto académico para la Universidad Galileo
