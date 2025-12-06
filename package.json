@@ -2,7 +2,6 @@
   "name": "pavel-ticket-api",
   "version": "1.0.0",
   "description": "Pavel Ticket - Sistema de Gestión de Eventos",
-  "license": "ISC",
   "author": "Pavel Huberto",
   "type": "module",
   "main": "src/index.js",
