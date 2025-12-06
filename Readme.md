@@ -347,5 +347,3 @@ Las contribuciones son bienvenidas. Por favor:
 ## Autor
 
 Pavel Huberto
-
-Desarrollado como proyecto académico para la Universidad de San Carlos de Guatemala.
